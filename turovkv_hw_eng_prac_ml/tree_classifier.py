@@ -2,7 +2,7 @@ from typing import Callable, Optional, NoReturn, List, Dict, Any
 
 import numpy as np
 
-from tree import DecisionTreeLeaf, DecisionTreeNode
+from tree_classifier.tree import DecisionTreeLeaf, DecisionTreeNode
 
 
 def gini(x: np.ndarray) -> float:
