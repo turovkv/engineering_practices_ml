@@ -29,8 +29,20 @@ threadpoolctl = "3.1.0"
 [tool.poetry.group.dev.dependencies]
 pytest = "^6.0.0"
 pytest-mock = "*"
+isort = "^5.10.1"
+black = "^22.10.0"
+flake8 = "^6.0.0"
+flake8-return = "^1.2.0"
+flake8-use-fstring = "^1.4"
+flake8-match = "^1.1.0"
+pre-commit = "^2.20.0"
+flake8-simplify = "^0.19.3"
+flake8-unused-arguments = "^0.0.12"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.flake8]
+max-line-length = 120

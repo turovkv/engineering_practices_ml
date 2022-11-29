@@ -1,3 +1,16 @@
+# ДЗ 3
+
+форматирование: isort, black
+
+
+flake8 plugins:
+- flake8-return 
+- flake8-use-fstring 
+- flake8-match
+- flake8-simplify 
+- flake8-unused-arguments 
+
+
 # ДЗ 2
 
 

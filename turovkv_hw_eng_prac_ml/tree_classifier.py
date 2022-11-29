@@ -1,7 +1,6 @@
-from typing import Callable, Optional, NoReturn, List, Dict, Any
+from typing import Any, Callable, Dict, List, NoReturn, Optional
 
 import numpy as np
-
 from tree_classifier.tree import DecisionTreeLeaf, DecisionTreeNode
 
 
@@ -38,26 +37,31 @@ def gain(left_y: np.ndarray, right_y: np.ndarray, criterion: Callable) -> float:
     """
     ln, rn = left_y.shape[0], right_y.shape[0]
     cur = (ln + rn) * criterion(np.concatenate([left_y, right_y]))
-    l = ln * criterion(left_y)
-    r = rn * criterion(right_y)
-    return cur - l - r
+    l_weight = ln * criterion(left_y)
+    r_weight = rn * criterion(right_y)
+    return cur - l_weight - r_weight
 
 
 # ### Задание 2 (1 балл)
-# Деревья решений имеют хорошую интерпретируемость, т.к. позволяют не только предсказать класс, но и объяснить, почему мы предсказали именно его. Например, мы можем его нарисовать. Чтобы сделать это, нам необходимо знать, как оно устроено внутри. Реализуйте классы, которые будут задавать структуру дерева.
+# Деревья решений имеют хорошую интерпретируемость, т.к. позволяют не только предсказать класс, но и объяснить,
+# почему мы предсказали именно его. Например, мы можем его нарисовать. Чтобы сделать это, нам необходимо знать,
+# как оно устроено внутри. Реализуйте классы, которые будут задавать структуру дерева.
 #
 # #### DecisionTreeLeaf
 # Поля:
 # 1. `y` должно содержать класс, который встречается чаще всего среди элементов листа дерева
 #
 # #### DecisionTreeNode
-# В данной домашней работе мы ограничемся порядковыми и количественными признаками, поэтому достаточно хранить измерение и значение признака, по которому разбиваем обучающую выборку.
+# В данной домашней работе мы ограничемся порядковыми и количественными признаками, поэтому достаточно хранить
+# измерение и значение признака, по которому разбиваем обучающую выборку.
 #
 # Поля:
 # 1. `split_dim` измерение, по которому разбиваем выборку
 # 2. `split_value` значение, по которому разбираем выборку
-# 3. `left` поддерево, отвечающее за случай `x[split_dim] < split_value`. Может быть `DecisionTreeNode` или `DecisionTreeLeaf`
-# 4. `right` поддерево, отвечающее за случай `x[split_dim] >= split_value`. Может быть `DecisionTreeNode` или `DecisionTreeLeaf`
+# 3. `left` поддерево, отвечающее за случай `x[split_dim] < split_value`.
+# Может быть `DecisionTreeNode` или `DecisionTreeLeaf`
+# 4. `right` поддерево, отвечающее за случай `x[split_dim] >= split_value`.
+# Может быть `DecisionTreeNode` или `DecisionTreeLeaf`
 #
 # __Интерфейс классов можно и нужно менять при необходимости__
 
@@ -73,7 +77,8 @@ def gain(left_y: np.ndarray, right_y: np.ndarray, criterion: Callable) -> float:
 # `predict_proba(X)` для каждого элемента из `X` возвращает словарь `dict`, состоящий из пар `(класс, вероятность)`
 #
 # #### Описание параметров конструктора
-# `criterion="gini"` - задает критерий, который будет использоваться при построении дерева. Возможные значения: `"gini"`, `"entropy"`.
+# `criterion="gini"` - задает критерий, который будет использоваться при построении дерева.
+# Возможные значения: `"gini"`, `"entropy"`.
 #
 # `max_depth=None` - ограничение глубины дерева. Если `None` - глубина не ограничена
 #
@@ -96,9 +101,12 @@ class DecisionTreeClassifier:
 
     """
 
-    def __init__(self, criterion: str = "gini",
-                 max_depth: Optional[int] = None,
-                 min_samples_leaf: int = 1):
+    def __init__(
+        self,
+        criterion: str = "gini",
+        max_depth: Optional[int] = None,
+        min_samples_leaf: int = 1,
+    ):
         """
         Parameters
         ----------
@@ -126,7 +134,7 @@ class DecisionTreeClassifier:
             dict(
                 zip(
                     list(map(lambda yi: self.float_label[yi], unique)),
-                    counts / XY.shape[0]
+                    counts / XY.shape[0],
                 )
             )
         )
@@ -139,13 +147,13 @@ class DecisionTreeClassifier:
         for ci in range(cn - 1):
             XY = XY[XY[:, ci].argsort()]
             for ri in range(rn):
-                curig = gain(XY[:ri + 1, -1], XY[ri + 1:, -1], self.criterion)
+                curig = gain(XY[: ri + 1, -1], XY[ri + 1 :, -1], self.criterion)
                 if maxig < curig:
                     maxig = curig
                     maxd = ci
                     maxri = ri
         XY = XY[XY[:, maxd].argsort()]
-        l, r = XY[:maxri + 1], XY[maxri + 1:]
+        l, r = XY[: maxri + 1], XY[maxri + 1 :]
         sep_val = XY[maxri, maxd]
         return DecisionTreeNode(maxd, sep_val), l, r
 
@@ -183,8 +191,7 @@ class DecisionTreeClassifier:
             return cur_node.d
         if x[cur_node.split_dim] <= cur_node.split_value:
             return self.find_leaf(x, cur_node.left)
-        else:
-            return self.find_leaf(x, cur_node.right)
+        return self.find_leaf(x, cur_node.right)
 
     def predict_proba(self, X: np.ndarray) -> List[Dict[Any, float]]:
         """

@@ -1,4 +1,4 @@
-from typing import Dict, Any, Union
+from typing import Any, Dict, Union
 
 
 class DecisionTreeLeaf:
@@ -30,9 +30,13 @@ class DecisionTreeNode:
         Поддерево, отвечающее за случай x[split_dim] >= split_value.
     """
 
-    def __init__(self, split_dim: int, split_value: float,
-                 left: Union['DecisionTreeNode', DecisionTreeLeaf] = None,
-                 right: Union['DecisionTreeNode', DecisionTreeLeaf] = None):
+    def __init__(
+        self,
+        split_dim: int,
+        split_value: float,
+        left: Union["DecisionTreeNode", DecisionTreeLeaf] = None,
+        right: Union["DecisionTreeNode", DecisionTreeLeaf] = None,
+    ):
         self.split_dim = split_dim
         self.split_value = split_value
         self.left = left
