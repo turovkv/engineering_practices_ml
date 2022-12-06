@@ -1,14 +1,20 @@
+# ДЗ 4
+
+запустить эксперимент   `dvc exp run`
+
+посмотреть результаты `dvc exp show`
+
 # ДЗ 3
 
 форматирование: isort, black
 
 
 flake8 plugins:
-- flake8-return 
-- flake8-use-fstring 
+- flake8-return
+- flake8-use-fstring
 - flake8-match
-- flake8-simplify 
-- flake8-unused-arguments 
+- flake8-simplify
+- flake8-unused-arguments
 
 
 # ДЗ 2
@@ -22,7 +28,7 @@ curl -sSL https://install.python-poetry.org | python3 -
 
 ## развертывание окружения.
 ```
-poetry install   
+poetry install
 ```
 
 ## сборка пакета:
@@ -53,6 +59,6 @@ pip install -i https://test.pypi.org/simple/ turovkv-hw-eng-prac-ml
 ```
 или
 ```
-poetry source add testpypi https://test.pypi.org/simple/ 
+poetry source add testpypi https://test.pypi.org/simple/
 poetry add --source testpypi turovkv-hw-eng-prac-ml
 ```
