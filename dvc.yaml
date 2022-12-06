@@ -1,0 +1,11 @@
+stages:
+  train:
+    cmd: python turovkv_hw_eng_prac_ml/main.py
+    deps:
+      - turovkv_hw_eng_prac_ml/main.py
+    metrics:
+      - dvclive/metrics.json:
+          cache: false
+    plots:
+      - dvclive/plots:
+          cache: false

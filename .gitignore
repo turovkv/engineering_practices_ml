@@ -3,3 +3,5 @@
 /.vscode
 /dist
 poetry.lock
+dvc.lock
+/turovkv_hw_eng_prac_ml/__pycache__/

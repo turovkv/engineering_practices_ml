@@ -2,11 +2,14 @@
 # coding: utf-8
 
 import numpy as np
+from dataset import read_dataset
 from sklearn.datasets import make_blobs, make_moons
 from sklearn.model_selection import train_test_split
-from tree_classifier.dataset import read_dataset
-from tree_classifier.tree_classifier import DecisionTreeClassifier
-from tree_classifier.visualisation import draw_tree, plot_2d, plot_roc_curve
+from tree_classifier import DecisionTreeClassifier
+from visualisation import draw_tree, plot_2d, plot_roc_curve
+
+# train.py
+from dvclive import Live
 
 # -------------------------------------------------------------------------
 # ---- test data ---------
@@ -41,4 +44,13 @@ def main(path="train.csv"):
     y_p = dtc.predict(X_test)
     correct = np.nonzero(y_p == y_test)[0].shape[0]
     all = y_test.shape[0]
+
+    with Live() as live:
+        live.log_param("max_depth", 6)
+        live.log_param("min_samples_leaf", 5)
+        live.log_metric("accuracy", correct / all)
     print(f"accuracy = {correct / all}")
+
+
+if __name__ == "__main__":
+    main("data/train.csv")
