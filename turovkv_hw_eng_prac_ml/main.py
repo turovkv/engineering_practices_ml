@@ -3,10 +3,8 @@
 
 import numpy as np
 from dataset import read_dataset
-from sklearn.datasets import make_blobs, make_moons
 from sklearn.model_selection import train_test_split
 from tree_classifier import DecisionTreeClassifier
-from visualisation import draw_tree, plot_2d, plot_roc_curve
 
 # train.py
 from dvclive import Live
@@ -16,20 +14,20 @@ from dvclive import Live
 
 
 def main(path="train.csv"):
-    noise = 0.35
-    X, y = make_moons(1500, noise=noise)
-    X_test, y_test = make_moons(200, noise=noise)
-    tree = DecisionTreeClassifier(max_depth=5, min_samples_leaf=30)
-    tree.fit(X, y)
-    plot_2d(tree, X, y)
-    plot_roc_curve(y_test, tree.predict_proba(X_test))
-    draw_tree(tree)
-
-    X, y = make_blobs(1500, 2, centers=[[0, 0], [-2.5, 0], [3, 2], [1.5, -2.0]])
-    tree = DecisionTreeClassifier(max_depth=5, min_samples_leaf=30)
-    tree.fit(X, y)
-    plot_2d(tree, X, y)
-    draw_tree(tree)
+    # noise = 0.35
+    # X, y = make_moons(1500, noise=noise)
+    # X_test, y_test = make_moons(200, noise=noise)
+    # tree = DecisionTreeClassifier(max_depth=5, min_samples_leaf=30)
+    # tree.fit(X, y)
+    # plot_2d(tree, X, y)
+    # plot_roc_curve(y_test, tree.predict_proba(X_test))
+    # draw_tree(tree)
+    #
+    # X, y = make_blobs(1500, 2, centers=[[0, 0], [-2.5, 0], [3, 2], [1.5, -2.0]])
+    # tree = DecisionTreeClassifier(max_depth=5, min_samples_leaf=30)
+    # tree.fit(X, y)
+    # plot_2d(tree, X, y)
+    # draw_tree(tree)
 
     # -------------------------------------------------------------------------
     # ---- real data ---------

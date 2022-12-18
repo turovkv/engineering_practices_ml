@@ -1,0 +1,34 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python turovkv_hw_eng_prac_ml/train.py data/prepared
+    deps:
+    - path: data/prepared
+      md5: 8c902706af159e244cf924c28cf55d16.dir
+      size: 36452
+      nfiles: 4
+    - path: turovkv_hw_eng_prac_ml/main.py
+      md5: 7bb0dd5ebc18a691deb1f4ca91da55bd
+      size: 1732
+    outs:
+    - path: dvclive/metrics.json
+      md5: a9aa9fa197393b214bf2dc6b3525da0a
+      size: 38
+    - path: dvclive/plots
+      md5: 2eea54738b8da294f406819467420a68.dir
+      size: 35
+      nfiles: 1
+  prepare_data:
+    cmd: python turovkv_hw_eng_prac_ml/dataset.py data/train.csv data/prepared
+    deps:
+    - path: data/train.csv
+      md5: 78cf3f9ec3ab9f6f80fbe62d4bc16ce0
+      size: 45194
+    - path: turovkv_hw_eng_prac_ml/dataset.py
+      md5: 5380c21718156ed2319266b726394945
+      size: 844
+    outs:
+    - path: data/prepared
+      md5: 8c902706af159e244cf924c28cf55d16.dir
+      size: 36452
+      nfiles: 4

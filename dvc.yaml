@@ -1,8 +1,17 @@
 stages:
+  prepare_data:
+    cmd: python turovkv_hw_eng_prac_ml/dataset.py data/train.csv data/prepared
+    deps:
+      - turovkv_hw_eng_prac_ml/dataset.py
+      - data/train.csv
+    outs:
+      - data/prepared
+
   train:
-    cmd: python turovkv_hw_eng_prac_ml/main.py
+    cmd: python turovkv_hw_eng_prac_ml/train.py data/prepared
     deps:
       - turovkv_hw_eng_prac_ml/main.py
+      - data/prepared
     metrics:
       - dvclive/metrics.json:
           cache: false
